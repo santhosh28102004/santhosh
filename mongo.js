@@ -68,5 +68,22 @@ app.delete("/deleteStudentByRollNo", async (req, res) => {
   }
 });
 
+app.put('/updateStudent',async(req,res) => {
+    const {rollNo,name,age,department} =req.body;
+    try{
+        const updatedStudent = await Student.findOneAndUpdate(
+            {rollNo},
+            {name,age,department},
+            {new:true}
+        );
+        if(updatedStudent){
+            res.send("Student updated");
+        }else{
+            res.status(404).send("students not found");
+        }
+    }catch (error){
+        res.status(500).send("error uploding student");
+    }
+});
 
 
